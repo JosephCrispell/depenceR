@@ -6,7 +6,7 @@ single or multiple R files, whereas pkgnet is designed to map the dependencies
 of an R package.
 
 ## Tasks:
-- TODO document packages and functions called/created in R files
+- TODO document packages and functions loaded/created/called in R files
 - TODO retrieve all functions for packages loaded
 - TODO identify all function calls in R files
 - TODO map called functions back to their source
