@@ -18,4 +18,3 @@ repos:
     rev: v0.3.2
     hooks:
     -   id: lintr
-        args: [--warn-only, --key=value]
