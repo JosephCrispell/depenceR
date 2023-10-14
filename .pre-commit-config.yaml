@@ -9,16 +9,13 @@ repos:
     -   id: check-added-large-files
     -   id: check-merge-conflict
 
-repos:
 -   repo: https://github.com/lorenzwalthert/precommit
     rev: v0.3.2
-    hooks: 
+    hooks:
     -   id: style-files
 
-repos:
 -   repo: https://github.com/lorenzwalthert/precommit
     rev: v0.3.2
     hooks:
     -   id: lintr
         args: [--warn-only, --key=value]
-        
