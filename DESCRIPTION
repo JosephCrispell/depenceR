@@ -1,0 +1,11 @@
+Package: dependenceR
+Title: Map Your R file(s) Dependencies
+Version: 0.0.0.9000
+Authors@R: 
+    person("Joseph", "Crispell", "crispelljoseph@gmail.com",
+    role = c("aut", "cre"))
+Description: Maps the package and function dependencies of your R code including your own bespoke functions.
+License: `use_gpl3_license()`
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
