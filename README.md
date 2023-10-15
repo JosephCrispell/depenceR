@@ -7,7 +7,6 @@ of an R package.
 
 ## Tasks:
 - TODO document packages and functions loaded/created/called in R files
-- TODO add unit tests
 - TODO retrieve all functions for packages loaded
 - TODO identify all function calls in R files
 - TODO map called functions back to their source
