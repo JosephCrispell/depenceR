@@ -41,7 +41,7 @@ need the following packages installed:
 Then you can use `devtools::test()` in `dependenceR``s root directory to run the tests.
 
 Building unit tests in R is very new to me and I have found the following resources useful so far:
-- [Unit testsing basics](https://usethis.r-lib.org/)
+- [Unit testing basics](https://r-pkgs.org/testing-basics.html)
 - [Getting started with unit testing in R](https://www.pipinghotdata.com/posts/2021-11-23-getting-started-with-unit-testing-in-r/)
 
 
