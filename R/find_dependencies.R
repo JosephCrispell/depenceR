@@ -59,3 +59,50 @@ get_code_line_indices <- function(file_lines) {
 
   return(line_numbers)
 }
+
+#' Get package name from line with library call
+#'
+#' @param line file line as text string
+#'
+#' @return string representing package name
+#'
+#' @examples
+#' file_line <- "library(\"dependenceR\")"
+#' get_package_name_from_library_line(file_line) # "\"dependenceR\""
+get_package_from_library_call <- function(line) {
+  return(unlist(strsplit(line, "\\(|\\)"))[2])
+}
+
+find_functions_and_packages <- function(file_path) {
+  # Get the file lines
+  file_lines <- readLines(file_path)
+
+  # Note indices of code lines
+  code_line_indices <- get_code_line_indices(file_lines)
+
+  # Get indices of lines with library calls
+  library_line_indices <- code_line_indices[
+    grepl("^library(.+)", file_lines[code_line_indices])
+  ]
+
+  # Get indices of lines with function definitions
+  function_def_line_indices <- code_line_indices[
+    # \\s* means 0 or multiple white spaces
+    grepl("<-\\s*function\\s*\\(", file_lines[code_line_indices])
+  ]
+
+  # Get indices of lines with function calls
+  function_call_line_indices <- code_line_indices[
+    # \\w+ - one or more word characters (letters, digits, and under-scores)
+    # \\s* means 0 or multiple white spaces
+    grepl("\\w+\\s*\\(", file_lines[code_line_indices])
+  ]
+
+  # Just for lintr :-D
+  return(
+    c(
+      library_line_indices, function_def_line_indices,
+      function_call_line_indices
+    )
+  )
+}
