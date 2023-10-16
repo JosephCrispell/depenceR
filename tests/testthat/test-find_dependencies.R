@@ -23,3 +23,8 @@ test_that("can identify code lines", {
   )
   expect_equal(get_code_line_indices(file_lines), c(5, 6))
 })
+
+test_that("can get package name", {
+  file_line <- "library(\"dependenceR\")"
+  expect_equal(get_package_name_from_library_line(file_line), "\"dependenceR\"")
+})
