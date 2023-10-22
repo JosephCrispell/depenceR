@@ -9,8 +9,9 @@ of an R package.
 - TODO document packages and functions loaded/created/called in R files
 - TODO retrieve all functions for packages loaded
 - TODO identify all function calls in R files
-- TODO map called functions back to their source
+- TODO map called functions back to their source files (and functions)
 - TODO report package and function dependencies
+- TODO consider how to extend to variables?
 
 # Repository structure
 The current repository has the following structure (standard R package setup
