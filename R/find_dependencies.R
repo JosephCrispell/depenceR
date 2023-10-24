@@ -86,6 +86,7 @@ find_functions_and_packages <- function(file_path) {
   ]
 
   # Get indices of lines with function definitions
+  # Note this ignores functions defined directly in apply statements
   function_def_line_indices <- code_line_indices[
     # \\s* means 0 or multiple white spaces
     grepl("<-\\s*function\\s*\\(", file_lines[code_line_indices])
@@ -97,6 +98,12 @@ find_functions_and_packages <- function(file_path) {
     # \\s* means 0 or multiple white spaces
     grepl("\\w+\\s*\\(", file_lines[code_line_indices])
   ]
+
+  # TODO consider how to map functions called within another function
+  #   TODO identify closing function def brackets, find closed function def
+  #        to define where function starts/ends
+  #   TODO check if any functions called fall in function def brackets
+  #   TODO assign source to function if they do, or file/package otherwise
 
   # Just for lintr :-D
   return(
