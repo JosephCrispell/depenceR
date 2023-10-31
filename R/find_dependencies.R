@@ -85,6 +85,11 @@ find_functions_and_packages <- function(file_path) {
     grepl("^library(.+)", file_lines[code_line_indices])
   ]
 
+  # Get indices of lines with direct package references
+  package_call_line_indices <- code_line_indices[
+    grepl("\\w+::", file_lines[code_line_indices])
+  ]
+
   # Get indices of lines with function definitions
   # Note this ignores functions defined directly in apply statements
   function_def_line_indices <- code_line_indices[
@@ -99,6 +104,11 @@ find_functions_and_packages <- function(file_path) {
     grepl("\\w+\\s*\\(", file_lines[code_line_indices])
   ]
 
+  # Get indices of closing curly brackets
+  closing_bracket_indices <- code_line_indices[
+    grepl("}", file_lines[code_line_indices])
+  ]
+
   # TODO consider how to map functions called within another function
   #   TODO identify closing function def brackets, find closed function def
   #        to define where function starts/ends
@@ -108,8 +118,9 @@ find_functions_and_packages <- function(file_path) {
   # Just for lintr :-D
   return(
     c(
-      library_line_indices, function_def_line_indices,
-      function_call_line_indices
+      library_line_indices, package_call_line_indices,
+      function_def_line_indices,
+      function_call_line_indices, closing_bracket_indices
     )
   )
 }
