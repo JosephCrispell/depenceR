@@ -68,9 +68,18 @@ get_code_line_indices <- function(file_lines) {
 #'
 #' @examples
 #' file_line <- "library(\"dependenceR\")"
-#' get_package_name_from_library_line(file_line) # "\"dependenceR\""
-get_package_from_library_call <- function(line) {
-  return(unlist(strsplit(line, "\\(|\\)"))[2])
+#' get_package_name_from_library_line(file_line) # "dependenceR"
+get_package_from_library_call <- function(file_line) {
+  # Split the line by brackets
+  line_parts <- unlist(strsplit(file_line, split = "\\(\"|\"\\)"))
+
+  # Find part with library
+  library_index <- grep(pattern = "library", line_parts)
+
+  # Get package name
+  package_name <- line_parts[library_index + 1]
+
+  return(package_name)
 }
 
 find_functions_and_packages <- function(file_path) {

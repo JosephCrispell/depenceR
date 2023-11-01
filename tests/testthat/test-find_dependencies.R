@@ -25,6 +25,6 @@ test_that("can identify code lines", {
 })
 
 test_that("can get package name", {
-  file_line <- "library(\"dependenceR\")"
-  expect_equal(get_package_from_library_call(file_line), "\"dependenceR\"")
+  file_line <- "library(\"dependenceR\") # a comment"
+  expect_equal(get_package_from_library_call(file_line), "dependenceR")
 })
