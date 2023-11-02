@@ -27,4 +27,16 @@ test_that("can identify code lines", {
 test_that("can get package name", {
   file_line <- "library(\"dependenceR\") # a comment"
   expect_equal(get_package_from_library_call(file_line), "dependenceR")
+
+  file_line <- "a <- test(something::else(c, d), this::too())"
+  expected_output <- data.frame(
+    "package" = c("something", "this"),
+    "function" = c("else", "too"),
+    row.names = c("something::else", "this::too"),
+    check.names = FALSE
+  )
+  expect_equal(
+    get_package_func_from_call(file_line),
+    expected_output
+  )
 })

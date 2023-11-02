@@ -82,6 +82,43 @@ get_package_from_library_call <- function(file_line) {
   return(package_name)
 }
 
+#' Get the package and function name from direct reference in file line
+#'
+#' If function from called from package directly with
+#' package_name::function_name the current function searches for these strings
+#' in file line and extracts package name and function name from them
+#' @param file_line file line containing direct funtion call from package
+#'
+#' @return dataframe with rows for each call recording package and function name
+#'
+#' @examples
+#' file_line <- "a <- test(something::else(c, d), this::too())"
+#' get_package_func_from_call(file_line)
+get_package_func_from_call <- function(file_line) {
+  # Split the line into parts
+  line_parts <- unlist(strsplit(file_line, split = "\\s+|\\(|\\)|,"))
+
+  # Get part(s) with "::" in it
+  package_references <- grep(":+", line_parts, value = TRUE)
+
+  # Split into package and function
+  packages_and_functions <- sapply(
+    package_references,
+    FUN = function(package_reference) {
+      # Split into package and function
+      package_and_function <- unlist(strsplit(package_reference, split = ":+"))
+      names(package_and_function) <- c("package", "function")
+
+      return(package_and_function)
+    }
+  )
+
+  # Convert to dataframe for ease of use
+  packages_and_functions <- as.data.frame(t(packages_and_functions))
+
+  return(packages_and_functions)
+}
+
 find_functions_and_packages <- function(file_path) {
   # Get the file lines
   file_lines <- readLines(file_path)
