@@ -40,3 +40,8 @@ test_that("can get package name", {
     expected_output
   )
 })
+
+test_that("can get function name", {
+  file_line <- "great_function <- function(first, second) {"
+  expect_equal(get_function_name_from_def(file_line), "great_function")
+})

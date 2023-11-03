@@ -119,6 +119,25 @@ get_package_func_from_call <- function(file_line) {
   return(packages_and_functions)
 }
 
+#' Get function name from line with function definition
+#'
+#' @param file_line file line containing function definition
+#'
+#' @return name of function as string
+#'
+#' @examples
+#' file_line <- "great_function <- function(first, second) {"
+#' get_function_name_from_def(file_line) # "great_function"
+get_function_name_from_def <- function(file_line) {
+  # Split the line into parts
+  line_parts <- unlist(strsplit(file_line, split = "\\s*<-"))
+
+  # Get the function name
+  function_name <- line_parts[1]
+
+  return(function_name)
+}
+
 find_functions_and_packages <- function(file_path) {
   # Get the file lines
   file_lines <- readLines(file_path)
