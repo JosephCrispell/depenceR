@@ -162,6 +162,14 @@ find_functions_and_packages <- function(file_path) {
     grepl("<-\\s*function\\s*\\(", file_lines[code_line_indices])
   ]
 
+  # Get indices of closing curly brackets
+  # TODO function that takes indices of definitions and brackets, calculates
+  # difference in lines between them and then pairs up closest
+  closing_bracket_indices <- code_line_indices[
+    grepl("}", file_lines[code_line_indices])
+  ]
+
+
   # Get indices of lines with function calls
   function_call_line_indices <- code_line_indices[
     # \\w+ - one or more word characters (letters, digits, and under-scores)
@@ -169,10 +177,7 @@ find_functions_and_packages <- function(file_path) {
     grepl("\\w+\\s*\\(", file_lines[code_line_indices])
   ]
 
-  # Get indices of closing curly brackets
-  closing_bracket_indices <- code_line_indices[
-    grepl("}", file_lines[code_line_indices])
-  ]
+
 
   # TODO consider how to map functions called within another function
   #   TODO identify closing function def brackets, find closed function def
