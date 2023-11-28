@@ -138,6 +138,10 @@ get_function_name_from_def <- function(file_line) {
   return(function_name)
 }
 
+pair_defs_and_brackets <- function(def_indices, closing_bracket_indices) {
+
+}
+
 find_functions_and_packages <- function(file_path) {
   # Get the file lines
   file_lines <- readLines(file_path)
