@@ -45,3 +45,11 @@ test_that("can get function name", {
   file_line <- "great_function <- function(first, second) {"
   expect_equal(get_function_name_from_def(file_line), "great_function")
 })
+
+test_that("remove quoted text", {
+  string <- 'test string with "quoted text" in "it", I can\'t "believe" it!!'
+  expect_equal(
+    remove_quoted_text(string)[[1]],
+    "test string with  in , I can't  it!!"
+  )
+})

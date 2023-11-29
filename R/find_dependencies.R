@@ -138,13 +138,12 @@ get_function_name_from_def <- function(file_line) {
   return(function_name)
 }
 
-pair_defs_and_brackets <- function(def_indices, closing_bracket_indices) {
-
-}
-
 find_functions_and_packages <- function(file_path) {
   # Get the file lines
   file_lines <- readLines(file_path)
+
+  # Remove any quoted text from the file lines
+  file_lines <- remove_quoted_text(file_lines)
 
   # Note indices of code lines
   code_line_indices <- get_code_line_indices(file_lines)
@@ -197,4 +196,49 @@ find_functions_and_packages <- function(file_path) {
       function_call_line_indices, closing_bracket_indices
     )
   )
+}
+
+#' Remove quoted text from string(s)
+#'
+#' @param strings vector of strings
+#'
+#' @return strings vector with any quoted text removed from strings
+#'
+#' @examples
+#' remove_quoted_text('test string with "quoted text"') # "test string with "
+remove_quoted_text <- function(strings) {
+  # TODO not working with when special characters in strings
+
+  # Examine each string
+  strings_without_quoted <- sapply(
+    strings,
+    FUN = function(string) {
+      # Find indices of quotes in string
+      quote_indices <- unlist(gregexpr('"', string))
+
+      # Skip if no quotes found
+      if (quote_indices[1] == -1) {
+        return(string)
+      }
+
+      # Check all quotes are in a pair
+      if (length(quote_indices) %% 2 != 0) {
+        stop("Unmatched quotes in the string!", quote_indices, string)
+      }
+
+      # Examine each pair of quotes and collect as patterns
+      string_without_quoted <- ""
+      for (index in seq(from = 1, to = length(quote_indices), by = 2)) {
+
+      }
+
+      return(string_without_quoted)
+    }
+  )
+
+  return(strings_without_quoted)
+}
+
+pair_defs_and_brackets <- function(def_indices, closing_bracket_indices) {
+
 }
