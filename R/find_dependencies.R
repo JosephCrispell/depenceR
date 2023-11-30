@@ -217,20 +217,36 @@ remove_quoted_text <- function(strings) {
       quote_indices <- unlist(gregexpr('"', string))
 
       # Skip if no quotes found
-      if (quote_indices[1] == -1) {
+      if (quote_indices[1] == -1 || length(quote_indices) == 1) {
         return(string)
       }
 
-      # Check all quotes are in a pair
-      if (length(quote_indices) %% 2 != 0) {
-        stop("Unmatched quotes in the string!", quote_indices, string)
-      }
+      # Get indices of non-quoted text
+      n_characters <- nchar(string)
+      non_quoted_indices <- c(
+        ifelse(1 %in% quote_indices, NA, 1),
+        quote_indices + rep(c(-1, 1), length(quote_indices) / 2),
+        ifelse(n_characters %in% quote_indices, NA, n_characters)
+      )
+      non_quoted_indices <- non_quoted_indices[
+        is.na(non_quoted_indices) == FALSE & non_quoted_indices <= n_characters
+      ]
 
-      # Examine each pair of quotes and collect as patterns
-      string_without_quoted <- ""
-      for (index in seq(from = 1, to = length(quote_indices), by = 2)) {
+      # Convert to matrix
+      non_quoted_indices <- matrix(non_quoted_indices, ncol = 2, byrow = TRUE)
 
-      }
+      # Extract each non-quoted characters in string
+      parts <- apply(
+        non_quoted_indices,
+        MARGIN = 1,
+        FUN = function(row, string) {
+          return(substr(string, row[[1]], row[[2]]))
+        },
+        string
+      )
+
+      # Combine non-quoted parts back into string
+      string_without_quoted <- paste(parts, collapse = "")
 
       return(string_without_quoted)
     }
